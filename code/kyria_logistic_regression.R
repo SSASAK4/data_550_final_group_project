@@ -9,7 +9,7 @@ library(tidyverse)
 library(broom)
 
 # Load the Dataset
-here::iam
+here::iam()
 data <- readRDS(file = here::here("output", "covid_cleaned.rds"))
 
 # Data Cleaning and Recoding
