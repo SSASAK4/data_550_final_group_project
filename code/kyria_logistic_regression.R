@@ -9,7 +9,8 @@ library(tidyverse)
 library(broom)
 
 # Load the Dataset
-df <- read.csv("covid_sub.csv")
+here::iam()
+data <- readRDS(file = here::here("output", "covid_cleaned.rds"))
 
 # Data Cleaning and Recoding
 # Need numeric 0/1 instead of Yes/No
