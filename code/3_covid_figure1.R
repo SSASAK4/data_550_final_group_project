@@ -42,4 +42,3 @@ saveRDS(
   plot,
   file = here::here("output/figure1.rds")
 )
-
