@@ -9,7 +9,7 @@ library(tidyverse)
 library(broom)
 
 # Load the Dataset
-here::iam()
+here::i_am("code/03_kyria_regression.R")
 data <- readRDS(file = here::here("output", "covid_cleaned.rds"))
 
 # Data Cleaning and Recoding
