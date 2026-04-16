@@ -1,3 +1,1 @@
-# data_550_final_group_project
-# data_550_final_group_project
-# data_550_final_group_project
+# This document contains what is essential to the final project for DATA 550
