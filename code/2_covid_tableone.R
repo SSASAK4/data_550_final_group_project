@@ -7,21 +7,6 @@ data <- readRDS(
   file = here::here("output", "covid_cleaned.rds")
 )
 
-data <- data %>%
-  rename(
-    sex                = SEX,
-    diabetes_bin       = DIABETES,
-    copd_bin           = COPD,
-    asthma_bin         = ASTHMA,
-    inmsupr_bin        = INMSUPR,
-    hypertension_bin   = HIPERTENSION,
-    other_disease_bin  = OTHER_DISEASE,
-    cardiovascular_bin = CARDIOVASCULAR,
-    obesity_bin        = OBESITY,
-    renal_bin          = RENAL_CHRONIC,
-    tobacco_bin        = TOBACCO
-  )
-
 bin_vars <- c("diabetes_bin", "copd_bin", "asthma_bin",
               "hypertension_bin", "inmsupr_bin", "other_disease_bin",
               "cardiovascular_bin", "obesity_bin", "renal_bin", "tobacco_bin")
