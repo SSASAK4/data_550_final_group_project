@@ -4,8 +4,6 @@
 # ==========================================
 library(here)
 
-setwd("/Users/hyelimshin/Desktop/data550_project/data_550_final_group_project")
-
 here::i_am("code/1_covid_cleaned.R")
 
 absolute_path_to_data <- here("data", "covid_sub.csv")
