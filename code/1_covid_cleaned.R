@@ -110,4 +110,3 @@ table(covid$covid_positive_bin, useNA = "ifany")
 # 9. EXPORT CLEANED DATA
 # ==========================================
 saveRDS(covid, file = here::here("output", "covid_cleaned.rds"))
-
