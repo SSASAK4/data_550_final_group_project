@@ -7,7 +7,7 @@ data <- readRDS(
   file = here::here("output", "covid_cleaned.rds")
 )
 
-covid <- data %>%
+data <- data %>%
   rename(
     sex                = SEX,
     diabetes_bin       = DIABETES,
