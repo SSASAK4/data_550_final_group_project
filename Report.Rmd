@@ -1,0 +1,46 @@
+---
+title: "COVID-19 Analysis Report"
+author: "Seiryo, Alyssa, Andrew, Hyelim, Chaaeun, Kyria"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r, here-i-am, include = FALSE}
+here::i_am(
+  "Report.Rmd"
+)
+```
+
+```{r, load-packages, include = FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+library(here)
+library(tidyverse)
+library(gtsummary)
+```
+
+## Table 1 — Patient Characteristics by COVID-19 Status
+```{r, table_1}
+table_one <- readRDS(here::here("output", "table_one.rds"))
+table_one
+```
+
+## Figure 1 — COVID-19 Cases by Age Group and Sex
+```{r figure1, fig.align='center', out.width='100%'}
+figure1 <- readRDS(here::here("output", "figure1.rds"))
+print(figure1)
+```
+
+## Figure 2 — Adjusted Odds Ratios for COVID-19 Death
+```{r forest-plot, fig.align='center', out.width='100%'}
+knitr::include_graphics(here::here("output", "forest_plot.png"))
+```
+
+## Figure 3 — Predicted Probability of Death by Age, Sex, and Hospitalization
+```{r marginal-effects, fig.align='center', out.width='100%'}
+knitr::include_graphics(here::here("output", "marginal_effects.png"))
+```
+
+## Figure 4 — Odds Ratios for Intubation
+```{r kyria-plot, fig.align='center', out.width='100%'}
+knitr::include_graphics(here::here("output", "kyria_intubation_plot.png"))
+```
