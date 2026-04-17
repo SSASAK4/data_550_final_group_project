@@ -1,64 +1,61 @@
-# Title: DATA 550 Midterm Project Code
+# Title: DATA 550 Final Group Project Code
 # Author: Kyria Santa
 # Predictors: Diabetes, Hypertension, COPD, Age, Sex
 # Outcome: Intubation
 # Date: 04/15/2026
 
-# Install and Load Packages 
+# ==========================================
+# LOAD PACKAGES
+# ==========================================
 library(tidyverse)
 library(broom)
+library(here)
 
-# Load the Dataset
+# ==========================================
+# LOAD DATA
+# ==========================================
 here::i_am("code/03_kyria_regression.R")
 data <- readRDS(file = here::here("output", "covid_cleaned.rds"))
 
-# Data Cleaning and Recoding
-# Need numeric 0/1 instead of Yes/No
-df_clean <- df %>%
-  mutate(
-    # Outcome: Intubed
-    INTUBED = ifelse(INTUBED == "Yes", 1,
-                     ifelse(INTUBED == "No", 0, NA)),
-    
-    # Predictors: Comorbidities
-    DIABETES = ifelse(DIABETES == "Yes", 1, 0),
-    HIPERTENSION = ifelse(HIPERTENSION == "Yes", 1, 0),
-    COPD = ifelse(COPD == "Yes", 1, 0),
-    
-    # Demographics
-    SEX = ifelse(SEX == "female", 1,
-                 ifelse(SEX == "male", 0, NA)), # 1 = Female, 0 = Male
-    AGE = as.numeric(AGE)
-  ) %>%
-  
-  # Remove missing rows
-  filter(!is.na(INTUBED))
+# ==========================================
+# PREPARE DATA
+# ==========================================
+# Data is already cleaned and recoded from 1_covid_cleaned.R
+# Just filter out missing intubation values
+df_clean <- data %>%
+  filter(!is.na(intubed_bin))
 
-# Run Logistic Regression
+# ==========================================
+# RUN LOGISTIC REGRESSION
+# ==========================================
 model <- glm(
-  INTUBED ~ DIABETES + HIPERTENSION + COPD + AGE + SEX,
+  intubed_bin ~ diabetes_bin + hypertension_bin + copd_bin + AGE + sex,
   data = df_clean,
   family = binomial(link = "logit")
 )
-summary(model)
 
-# Odds Ratios (ORs) and Confidence Intervals (CIs)
+print(summary(model))
+
+# ==========================================
+# ODDS RATIOS AND CONFIDENCE INTERVALS
+# ==========================================
 model_results <- tidy(model, exponentiate = TRUE, conf.int = TRUE)
+print(model_results)
 
-model_results
-
-# Plots
-model_results <- model_results %>%
+# ==========================================
+# PLOT
+# ==========================================
+plot_results <- model_results %>%
   filter(term != "(Intercept)") %>%
   mutate(term = recode(term,
-        DIABETES = "Diabetes",
-        HIPERTENSION = "Hypertension",
-        COPD = "COPD",
-        AGE = "Age",
-        SEX = "Sex (Female)"
+                       diabetes_bin     = "Diabetes",
+                       hypertension_bin = "Hypertension",
+                       copd_bin         = "COPD",
+                       AGE              = "Age",
+                       sexMale          = "Sex (Male)"
   ))
 
-ggplot(model_results, aes(x = term, y = estimate)) +
+ggplot(plot_results, aes(x = term, y = estimate)) +
   geom_point(size = 3) +
   geom_errorbar(aes(ymin = conf.low, ymax = conf.high), width = 0.2) +
   geom_hline(yintercept = 1, linetype = "dashed") +
@@ -70,8 +67,17 @@ ggplot(model_results, aes(x = term, y = estimate)) +
   ) +
   theme_minimal()
 
-# Checking sex variable
-table(df$SEX, useNA = "ifany")
+# ==========================================
+# SAVE OUTPUTS
+# ==========================================
+ggsave(
+  here::here("output", "kyria_intubation_plot.png"),
+  width = 8, height = 5, dpi = 150
+)
 
+saveRDS(model, file = here::here("output", "kyria_model.rds"))
 
-
+# ==========================================
+# QUALITY CHECK
+# ==========================================
+print(table(df_clean$sex, useNA = "ifany"))
