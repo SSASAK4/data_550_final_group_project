@@ -1,12 +1,11 @@
-.PHONY: install build all clean
+.PHONY: install all clean
 
 install:
 	Rscript -e "renv::restore(prompt = FALSE)"
 
 all: install report.html
 
-build:
-	Rscript -e "rmarkdown::render('Report.Rmd')"
+build: all
 
 report.html: Report.Rmd output/covid_cleaned.rds output/table_one.rds \
 	output/figure1.rds output/forest_plot.png output/marginal_effects.png \

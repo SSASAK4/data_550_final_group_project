@@ -15,6 +15,11 @@ with COVID-19 diagnosis, hospitalization, and death. The analysis includes
 data cleaning, descriptive statistics, logistic regression models, and
 data visualizations.
 
+## How to Generate Report
+1. Clone the repository: `git clone https://github.com/SSASAK4/data_550_final_group_project.git`
+2. Run `make install` to set up the R package environment
+3. Run `make all` or `make build` to run the analysis and generate the report
+
 ## Repository Structure
 There are 6 folders: code, configuration_file data, final_code, miscellaneous, and output.
 The Makefile, README, and Report. Rmd are files that are not in folders.
